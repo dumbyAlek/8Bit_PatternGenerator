@@ -10,7 +10,7 @@ module tb_led_pattern;
     wire [7:0] led;
 
     // Instantiate the Pattern Generator Module
-    led_PatternGen(clk,rst,led);
+    led_PatternGen lpg #(.MAX_COUNT(4)) (clk,rst,led);
 
     // Generate a 50 MHz clock (20ns period -> toggle every 10ns)
     initial begin
@@ -30,7 +30,7 @@ module tb_led_pattern;
         rst = 0;
         
         // Wait long enough to see a full rotation.
-        #4000000000;
+        #1000;
         
         // Test if the reset immediately returns the state to 10000000
         rst = 1;
