@@ -10,7 +10,7 @@ module tb_led_pattern;
     wire [7:0] led;
 
     // Instantiate the Pattern Generator Module
-    led_PatternGen lpg #(.MAX_COUNT(4)) (clk,rst,led);
+    led_PatternGen lpg (clk,rst,led);
 
     // Generate a 50 MHz clock (20ns period -> toggle every 10ns)
     initial begin
@@ -22,20 +22,30 @@ module tb_led_pattern;
     initial begin
         // Apply reset to initialize the system
         rst = 1;
-        
+       
         // Hold reset
         #100;
-        
+       
         // Release reset and let the pattern run
         rst = 0;
-        
+       
         // Wait long enough to see a full rotation.
-        #1000;
-        
+        // Instead of #4000000000 which will break the 32 bit limit, we use #500000000 8 times
+        #500000000;
+        #500000000;
+        #500000000;
+        #500000000;
+        #500000000;
+        #500000000;
+        #500000000;
+        #500000000;
+        #500000000;
+        #500000000;
+       
         // Test if the reset immediately returns the state to 10000000
         rst = 1;
-        #50;
-        
+        #500000000;
+       
         // Pause the simulation
         $stop;
     end
